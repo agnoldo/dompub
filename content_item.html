@@ -30,23 +30,48 @@ permalink: /content/item.html
 
 var id = parseInt($.QueryString["id"]);
 var url_json = "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(id/1000)) + "/obdp" + id + ".json";
-console.log(url_json);
 $.getJSON( url_json, function( data ) {
   $("header.post-header h1").text(data.titulo);
   $("header.post-header p.lead").text(data.nome_autor);
 
+console.log("https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + data.co_categoria + ".json");
+  $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + data.co_categoria + ".json", function( dataCat ) {
+    var tipo_midia = dataCat.co_midia;
+
   var autor_idioma = data.nome_autor + (data.nome_idioma ? "<br>[" + data.nome_idioma + "]" : "");
   var a_url_autor_a = "<a href='/content/author.html?id=" + data.co_autor.substr(4) + "'>" + autor_idioma + "</a";
-  var url_obra = "https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + data.co_obra + ".epub";
+  var url_obra, bloco_objeto;
+  switch('' + tipo_midia) {
+    case "2": // Textos
+      url_obra = "https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + data.co_obra + ".epub";
+      bloco_objeto = "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + data.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
+      break;
+    case "3": // Sons
+      url_obra = "http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + data.co_obra + "&co_midia=3";
+      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='audio/mpeg'><audio controls=''></audio></object>";
+      break;
+    case "5": // Imagens
+      url_obra = "http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + data.co_obra + "&co_midia=5";
+      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='image/jpeg'><img style='width:100%' data-src='holder.js/150x200?text=Imagem%20não%20\nencontrada'></object>";
+      break;
+    case "6": // Vídeos
+      url_obra = "http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + data.co_obra + "&co_midia=6";
+      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='video/mp4'><video controls=''></video></object>";
+      break;
+  }
+console.log(tipo_midia);
+console.log(url_obra);
+console.log(bloco_objeto);
 
   $( "<div/>", {
     "style": "width: 100%",
-    "html": "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + data.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>"
+    "html": bloco_objeto
   }).appendTo( "#div_obra_conteudo" );
 
   $( "<div/>", {
     "html": "<h2>" + data.titulo + "</h2><br><h4>" + a_url_autor_a + "</h4><br><br><div style='width:100%;'><a class='button button--sm' href='#'><i class='icon-book'></i> Ler</a>&nbsp;<a class='button button--sm' href='" + url_obra + "'><i class='icon-hdd'></i> Baixar</a></div>"
   }).appendTo( "#div_obra_descricao" );
 
+  });
 });
 </script>
