@@ -9,25 +9,25 @@ permalink: /content/
 navigation: visible
 ---
 <div id="div_midia_2" class="col-25 white-box">
-  <h2>Textos</h2>
 </div>
 <div id="div_midia_3" class="col-25 white-box">
-  <h2>Sons</h2>
 </div>
 <div id="div_midia_5" class="col-25 white-box">
-  <h2>Imagens</h2>
 </div>
 <div id="div_midia_6" class="col-25 white-box">
-  <h2>Vídeos</h2>
 </div>
 
 <script>
 $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/midia_categorias_principais_05.json", function( data ) {
   var items = {2: [], 3: [], 5: [], 6: []};
+  var item_names = {2: "Textos", 3: "Sons", 5: "Imagens", 6: "Vídeos"};
   $.each( data.record, function( key, val ) {
     items[val.co_midia].push("<tr><td class='col-66'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.nome_categoria + "</a></td><td class='col-33'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.total_obras + "</a></td></tr>");
   });
   $.each( items, function( key, val) {
+    $( "<h2/>" , {
+      "html": "<a href='/content/categories.html?midia=" + key + "'>" + item_names[key] + "</a>"
+    }).appendTo( "#div_midia_" + key );
     $( "<table/>", {
       "class": "col-80",
       "style": "margin: 0 auto; width: 100%; margin-top: 10px; margin-bottom: 10px;",
@@ -35,7 +35,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
     }).appendTo( "#div_midia_" + key );
     $( "<a/>", {
       "class": "button button--sm",
-      "href": "#",
+      "href": "/content/categories.html?midia=" + key,
       html: "Todas as categorias »"
     }).appendTo( "#div_midia_" + key );
   });

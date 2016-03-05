@@ -1,0 +1,65 @@
+---
+layout: blog
+title: Categorias
+subtitle: Todas as Categorias
+caption: Livros, etc.
+icon: book
+background: "#550000"
+permalink: /content/categories.html
+---
+<div id="div_categoria_1" class="col-20">
+</div>
+<div id="div_categoria_2" class="col-20">
+</div>
+<div id="div_categoria_3" class="col-20">
+</div>
+<div id="div_categoria_4" class="col-20">
+</div>
+<div id="div_categoria_5" class="col-20">
+</div>
+<div id="div_rodape" class="col-100" style="text-align:center">
+</div>
+
+<script>
+
+(function($) {
+    $.QueryString = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
+
+var midia = parseInt($.QueryString["midia"]);
+
+$.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/midp" + midia + ".json", function( data ) {
+  $("header.post-header h1").text(data.nome);
+  $("header.post-header p.lead").text("Categorias: " + data.record.length + " - Obras: " + data.total_obras);
+
+  var items = {1: [], 2: [], 3: [], 4: [], 5: []};
+  var cont = 0;
+  $.each( data.record, function( key, val ) {
+    items[(cont % 5) + 1].push("<tr><td class='col-66'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.nome + "</a></td><td class='col-33'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.total_obras + "</a></td></tr>");
+    cont++;
+  });
+  $.each( items, function( key, val) {
+    $( "<table/>", {
+      "class": "col-80",
+      "style": "margin: 0 auto; width: 100%; margin-top: 10px; margin-bottom: 10px;",
+      html: val.join( "" )
+    }).appendTo( "#div_categoria_" + key );
+  });
+
+  $( "<span/>", {
+    "style": "text-align: center",
+    html: "Total de obras: " + data.total_obras
+  }).appendTo( "#div_rodape" );
+
+});
+</script>
