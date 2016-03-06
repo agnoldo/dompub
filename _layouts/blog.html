@@ -12,6 +12,22 @@ layout: default
 <!-- END COVER -->
 </div>
 
+<script>
+(function($) {
+    $.QueryString = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
+</script>
+
 <section class="post">
 
   <div class="c">
@@ -31,8 +47,8 @@ layout: default
 * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
 */
 var disqus_config = function () {
-this.page.url = '{{ page.url }}'; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+this.page.url = '{{ page.url | prepend: site.baseurl }}';
+this.page.identifier = JSON.stringify($.QueryString); // '{{ page.id }}';
 console.log("disqus this.page.url = " + this.page.url);
 console.log("disqus this.page.identifier = " + this.page.identifier);
 };
