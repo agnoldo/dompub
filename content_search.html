@@ -32,14 +32,16 @@ $(document).ready(function() {
     url: "https://agnoldo.cloudant.com/dompub/_find",
     type: 'POST',
     dataType: 'json',
-    crossDomain: true,
+//    crossDomain: true,
     data: { "selector": { "$text": search_term } },
     success: function() { alert('hello!'); },
     error: function() { alert('boo!'); },
     beforeSend: function(xhr) {
-      xhr.withCredentials = true;
-      xhr.setRequestHeader('Authorization', 'Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI');
+//      xhr.withCredentials = true;
+      xhr.setRequestHeader('Authorization', 'Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI=');
       xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+//      xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
   });
 });
