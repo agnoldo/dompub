@@ -29,7 +29,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
       "html": "<a href='/content/categories.html?midia=" + key + "'>" + item_names[key] + "</a>"
     }).appendTo( "#div_midia_" + key );
     $( "<table/>", {
-      "class": "col-80",
+      "class": "col-100",
       "style": "margin: 0 auto; width: 100%; margin-top: 10px; margin-bottom: 10px;",
       html: val.join( "" )
     }).appendTo( "#div_midia_" + key );
