@@ -32,6 +32,7 @@ $(document).ready(function() {
     url: "https://agnoldo.cloudant.com/dompub/_find",
     type: 'GET',
     dataType: 'json',
+    crossDomain: true,
     data: { "selector": { "$text": search_term } },
     success: function() { alert('hello!'); },
     error: function() { alert('boo!'); },
