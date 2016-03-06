@@ -22,7 +22,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
   var items = {2: [], 3: [], 5: [], 6: []};
   var item_names = {2: "Textos", 3: "Sons", 5: "Imagens", 6: "Vídeos"};
   $.each( data.record, function( key, val ) {
-    items[val.co_midia].push("<tr><td class='col-66'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.nome_categoria + "</a></td><td class='col-33'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.total_obras + "</a></td></tr>");
+    items[val.co_midia].push("<tr><td style='width: 70%'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.nome_categoria + "</a></td><td style='width: 30%'><a href='/content/category.html?cat=" + val.co_categoria + "&pg=1'>" + val.total_obras + "</a></td></tr>");
   });
   $.each( items, function( key, val) {
     $( "<h2/>" , {
