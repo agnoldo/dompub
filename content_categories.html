@@ -39,7 +39,8 @@ permalink: /content/categories.html
 var midia = parseInt($.QueryString["midia"]);
 
 $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/midp" + midia + ".json", function( data ) {
-  $("header.post-header h1").text(data.nome);
+  var item_names = {2: "Textos", 3: "Sons", 5: "Imagens", 6: "Vídeos"};
+  $("header.post-header h1").text(item_names[data.co_midia]);
   $("header.post-header p.lead").text("Categorias: " + data.record.length + " - Obras: " + data.total_obras);
 
   var items = {1: [], 2: [], 3: [], 4: [], 5: []};
