@@ -1,11 +1,10 @@
 ---
 layout: blog
-title: Categoria
-subtitle: Obras desta Categoria
+title: Busca por palavra
 caption: Livros, ebooks, obras
 icon: book
 background: "#550000"
-permalink: /content/category.html
+permalink: /content/search.html
 ---
 <div id="div_obras_1" class="col-20">
 </div>
@@ -22,24 +21,30 @@ permalink: /content/category.html
 
 <script>
 
-(function($) {
-    $.QueryString = (function(a) {
-        if (a == "") return {};
-        var b = {};
-        for (var i = 0; i < a.length; ++i)
-        {
-            var p=a[i].split('=');
-            if (p.length != 2) continue;
-            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-        }
-        return b;
-    })(window.location.search.substr(1).split('&'))
-})(jQuery);
+var search_term = $.QueryString["text"];
 
-var cat = parseInt($.QueryString["cat"]);
-var pg = parseInt($.QueryString["pg"]);
+  $("header.post-header h1").text("Busca por '" + search_term + "'");
 
-$.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/catpag/cadp" + cat + "_p" + pg + ".json", function( data ) {
+// https://agnoldo.cloudant.com/dompub/_find -H 'Authorization: Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI=' -H "Content-Type:application/json" -d '{ "selector": { "$text": "darwin"} }'
+
+$(document).ready(function() {
+  $.ajax({
+    url: "https://agnoldo.cloudant.com/dompub/_find",
+    type: 'GET',
+    dataType: 'json',
+    data: { "selector": { "$text": search_term } },
+    success: function() { alert('hello!'); },
+    error: function() { alert('boo!'); },
+    beforeSend: function(xhr) {
+      xhr.withCredentials = true;
+      xhr.setRequestHeader('Authorization', 'Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI');
+    }
+  });
+});
+
+/*
+$.getJSON( "https://agnoldo.cloudant.com/dompub/_find", { "selector": { "$text": search_term }, "withCredentials": true }, function( data ) {
+console.log(data);
   $("header.post-header h1").text(data.nome);
   $("header.post-header p.lead").text("Página: " +  pg + " de " + data.total_paginas + " - " + "Obras: " + data.total_obras);
   // https://dribbble.com/shots/344061-Search
@@ -124,4 +129,6 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
   }).appendTo( "#div_rodape" );
 
 });
+
+*/
 </script>

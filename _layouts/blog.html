@@ -49,8 +49,6 @@ layout: default
 var disqus_config = function () {
 this.page.url = '{{ page.url | prepend: site.baseurl }}';
 this.page.identifier = JSON.stringify($.QueryString); // '{{ page.id }}';
-console.log("disqus this.page.url = " + this.page.url);
-console.log("disqus this.page.identifier = " + this.page.identifier);
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
