@@ -34,13 +34,16 @@ $.getJSON( url_json, function( data ) {
   $("header.post-header h1").text(data.titulo);
   $("header.post-header p.lead").text(data.nome_autor);
 
-console.log("https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + data.co_categoria + ".json");
   $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + data.co_categoria + ".json", function( dataCat ) {
     var tipo_midia = dataCat.co_midia;
 
   var autor_idioma = (data.nome_autor.trim() == "Desconhecido" ? "" : data.nome_autor) + (data.nome_idioma && (data.nome_idioma != "Não Aplicável") ? "<br>[" + data.nome_idioma + "]" : "");
   var a_url_autor_a = "<a href='/content/author.html?id=" + data.co_autor.substr(4) + "'>" + autor_idioma + "</a";
   var url_obra, bloco_objeto, bloco_botoes;
+
+  var formatos_mime = {"flv": "video/x-flv", "mp4" : "video/mp4", "3gp" : "video/3gpp", "mov" : "video/quicktime", "avi" : "video/x-msvideo", "wmv" : "video/x-ms-wmv"};
+  var formato = formatos_mime[data.formato];
+
   switch('' + tipo_midia) {
     case "2": // Textos
       url_obra = "https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + data.co_obra + ".epub";
@@ -49,7 +52,7 @@ console.log("https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/jso
       break;
     case "3": // Sons
       url_obra = "http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + data.co_obra + "&co_midia=3";
-      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='audio/mpeg'><audio controls=''></audio></object>";
+      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='" + (formato ? formato : "audio/mpeg") + "'><audio controls=''></audio></object>";
       bloco_botoes = "<a class='button button--sm' href='" + url_obra + "'><i class='icon-hdd'></i> Baixar</a>";
       break;
     case "5": // Imagens
@@ -59,7 +62,7 @@ console.log("https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/jso
       break;
     case "6": // Vídeos
       url_obra = "http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + data.co_obra + "&co_midia=6";
-      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='video/x-ms-wmv'>Seu navegador não suporta vídeo HTML.</object>";
+      bloco_objeto = "<object style='width:100%' data='" + url_obra + "' type='" + (formato ? formato : "video/x-ms-wmv") + "'>Seu navegador não suporta vídeo HTML.</object>";
 //      bloco_objeto = "<video style='width:100%;' controls=''><source src='" + url_obra + "' type='video/x-ms-wmv'><object style='width:100%' data='" + url_obra + "' type='video/x-ms-wmv'></object>Seu navegador não suporta vídeo HTML.</video>";
       bloco_botoes = "<a class='button button--sm' href='" + url_obra + "'><i class='icon-hdd'></i> Baixar</a>";
       break;
