@@ -30,7 +30,7 @@ var search_term = $.QueryString["text"];
 $(document).ready(function() {
   $.ajax({
     url: "https://agnoldo.cloudant.com/dompub/_find",
-    type: 'GET',
+    type: 'POST',
     dataType: 'json',
     crossDomain: true,
     data: { "selector": { "$text": search_term } },
