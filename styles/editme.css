@@ -112,7 +112,7 @@ label.search_box {
 
 @media screen and (max-width: 767px) {
 div.search_box {
-    left: 20%;
+    left: 10%;
     right: 0px;
     bottom: 0px;
     height: 40px;
