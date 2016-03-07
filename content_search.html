@@ -51,7 +51,7 @@ function preencherConformeTipoMidia(val) {
               bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
               break;
             case "5": // Imagens
-              bloco_objeto = "<img style='max-width:100%' src='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'><img style='width:100%' data-src='holder.js/150x200?text=Imagem%20não%20\nencontrada'></img>";
+              bloco_objeto = "<object style='max-width:100%' data='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'><img style='width:100%' data-src='holder.js/150x200?text=Imagem%20não%20\nencontrada'></img>";
               break;
             case "6": // Vídeos
               bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
