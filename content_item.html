@@ -82,8 +82,9 @@ console.log(bloco_objeto);
     "html": bloco_objeto
   }).appendTo( "#div_obra_conteudo" );
 
+  var obs = "<br><p><small>* Observação: infelizmente existem erros em formato ou armazenamento de diversas obras deste site. Por favor use a seção de comentários abaixo ou envie email para <a href='mailto:dominiopublico.xyz@gmail.com'>dominiopublico.xyz@gmail.com</a> caso detecte algum problema. Obrigado!</small></p>";
   $( "<div/>", {
-    "html": "<h2>" + data.titulo + "</h2><br><h4>" + a_url_autor_a + "</h4><br><br><div style='width:100%;'>" + bloco_botoes + "</div>"
+    "html": "<h2>" + data.titulo + "</h2><br><h4>" + a_url_autor_a + "</h4><br><br><div style='width:100%;'>" + bloco_botoes + obs + "</div>"
   }).appendTo( "#div_obra_descricao" );
 
   });
