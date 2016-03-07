@@ -23,116 +23,63 @@ permalink: /content/search.html
 
 var search_term = $.QueryString["text"];
 
-  $("header.post-header h1").text("Busca por '" + search_term + "'");
-
-// https://agnoldo.cloudant.com/dompub/_find -H 'Authorization: Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI=' -H "Content-Type:application/json" -d '{ "selector": { "$text": "darwin"} }'
+$("header.post-header h1").text("Busca por '" + search_term + "'");
 
 $(document).ready(function() {
   $.ajax({
     url: "https://agnoldo.cloudant.com/dompub/_find",
     type: 'POST',
     dataType: 'json',
-//    crossDomain: true,
-    data: { "selector": { "$text": search_term } },
-    success: function() { alert('hello!'); },
-    error: function() { alert('boo!'); },
+    data: JSON.stringify({ "selector": { "$text": search_term, "tipo": "obra" } }),
+    success: function(data) {
+      // busca textual deu certo
+      $("header.post-header p.lead").text("Obras encontradas: " + data.docs.length);
+      var cont = 0;
+      $.each( data.docs, function( key, val2 ) {
+function preencherConformeTipoMidia(val) {
+        var a_url_obra = "<a href='/content/item.html?id=" + val.co_obra + "'>";
+        var autor_idioma = val.nome_autor + (val.nome_idioma ? "<br>[" + val.nome_idioma + "]" : "");
+        var a_url_autor_a = ($.inArray(val.co_autor.substr(4), ["10", "32", "117"]) ?  "<a href='/content/author.html?id=" + val.co_autor.substr(4) + "'>" + autor_idioma + "</a>" : autor_idioma);
+        var bloco_objeto, tipo_midia;
+        $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + val.co_categoria + ".json", function( dataCat ) {
+          tipo_midia = dataCat.co_midia;
+          switch('' + tipo_midia) {
+            case "2": // Textos
+              bloco_objeto = "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
+              break;
+            case "3": // Sons
+              bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
+              break;
+            case "5": // Imagens
+              bloco_objeto = "<img style='max-width:100%' src='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'><img style='width:100%' data-src='holder.js/150x200?text=Imagem%20não%20\nencontrada'></img>";
+              break;
+            case "6": // Vídeos
+              bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
+              break;
+          }
+          $( "<div/>", {
+            "class": "col-100 white-box",
+            html: // "<div class='col-100 white-box'>" +
+            a_url_obra + bloco_objeto + "</a><br>" +
+            a_url_obra + val.titulo + "</a><br><small>" +
+            a_url_autor_a + "</small>"
+          }).appendTo( "#div_obras_" + ((cont % 5) + 1) );
+          cont++;
+        });
+}
+        preencherConformeTipoMidia(val2);
+      });
+    },
+    error: function(error) {
+      alert('Erro no acesso ao banco de dados de busca textual.');
+      console.log('Erro: ' + error);
+    },
     beforeSend: function(xhr) {
-//      xhr.withCredentials = true;
+      xhr.withCredentials = true;
       xhr.setRequestHeader('Authorization', 'Basic c2luZ2VydGVkZXNzZXVyc291dGhlbWRpOjEzODBmZjJhYTUwNWY0Y2NlMjdmMjE4ZDBhN2VlOGY3MWZmMjkyZjI=');
-      xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-//      xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type');
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     }
   });
 });
 
-/*
-$.getJSON( "https://agnoldo.cloudant.com/dompub/_find", { "selector": { "$text": search_term }, "withCredentials": true }, function( data ) {
-console.log(data);
-  $("header.post-header h1").text(data.nome);
-  $("header.post-header p.lead").text("Página: " +  pg + " de " + data.total_paginas + " - " + "Obras: " + data.total_obras);
-  // https://dribbble.com/shots/344061-Search
-  $( "<div/>", {
-    class: "search_box",
-    html: "<input class='search_box' type='text' id='search'><label class='search_box' for='search'>Procurar</label>"
-  }).appendTo("header.post-header");
-  $("header.post-header div.search_box input.search_box").bind("enterKey",function(e){
-    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
-  });
-  $('header.post-header div.search_box input.search_box').keyup(function(e){
-    if(e.keyCode == 13)
-    {
-      $(this).trigger("enterKey");
-    }
-  });
-  $("header.post-header div.search_box label.search_box").on('click', function(){
-    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
-  });
-
-  var items = {1: [], 2: [], 3: [], 4: [], 5: []};
-  var cont = 0;
-  $.each( data.record, function( key, val ) {
-    var a_url_obra = "<a href='/content/item.html?id=" + val.co_obra + "'>";
-    var autor_idioma = val.nome_autor + (val.nome_idioma ? "<br>[" + val.nome_idioma + "]" : "");
-    var a_url_autor_a = ($.inArray(val.co_autor.substr(4), ["10", "32", "117"]) ?  "<a href='/content/author.html?id=" + val.co_autor.substr(4) + "'>" + autor_idioma + "</a>" : autor_idioma);
-    var bloco_objeto;
-    switch('' + data.co_midia) {
-      case "2": // Textos
-        bloco_objeto = "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
-        break;
-      case "3": // Sons
-        bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
-        break;
-      case "5": // Imagens
-        bloco_objeto = "<img style='max-width:100%' src='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'><img style='width:100%' data-src='holder.js/150x200?text=Imagem%20não%20\nencontrada'></img>";
-        break;
-      case "6": // Vídeos
-        bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
-        break;
-    }
-
-    items[(cont % 5) + 1].push(
-      "<div class='col-100 white-box'>" +
-      a_url_obra + bloco_objeto + "</a><br>" +
-      a_url_obra + val.titulo + "</a><br><small>" +
-      a_url_autor_a + "</small>");
-    cont++;
-  });
-  $.each( items, function( key, val) {
-    $.each( val, function( key2, item) {
-      $( "<div/>", {
-        "class": "col-100 white-box",
-        html: item
-      }).appendTo( "#div_obras_" + key );
-    });
-  });
-
-  if (data.total_paginas > 1) {
-    var ini = (pg > 2 ? pg - 2 : 1);
-    var fim = Math.min(pg + 5, data.total_paginas);
-    var items = [];
-    items.push("<li><a href='/content/category.html?cat=" + cat + "&pg=1'>«</a></li>");
-    for (i = ini; i <= fim; i++) {
-      items.push("<li><a " + (i == pg ? "class='active'" : "") + " href='/content/category.html?cat=" + cat + "&pg=" + i + "'>" + i + "</a></li>");
-    }
-    items.push("<li><a href='/content/category.html?cat=" + cat + "&pg=" + data.total_paginas + "'>»</a></li>");
-  }
-
-  $( "<br>").appendTo( "#div_rodape" );
-
-  $( "<ul/>", {
-    "class": "pagination",
-    html: items.join("")
-  }).appendTo( "#div_rodape" );
-
-  $( "<br>").appendTo( "#div_rodape" );
-
-  $( "<span/>", {
-    "style": "text-align: center",
-    html: "Total de obras: " + data.total_obras
-  }).appendTo( "#div_rodape" );
-
-});
-
-*/
 </script>
