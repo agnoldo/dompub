@@ -1,0 +1,83 @@
+---
+layout: default
+---
+  
+  <div class="c">
+    <header class="post-header">
+      <h1>{{ page.title }}</h1>
+      <p class="lead">{{ page.subtitle }}</p>
+    </header>
+  </div>
+  
+<!-- END COVER -->
+</div>
+
+<script>
+(function($) {
+    $.QueryString = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
+
+  // https://dribbble.com/shots/344061-Search
+  $( "<div/>", {
+    class: "search_box",
+    html: "<input class='search_box' type='text' id='search' alt='Procurar...'><label class='search_box' for='search'>Procurar</label>"
+  }).appendTo("header.post-header");
+  $("header.post-header div.search_box input.search_box").bind("enterKey",function(e){
+    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
+  });
+  $('header.post-header div.search_box input.search_box').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+      $(this).trigger("enterKey");
+    }
+  });
+  $("header.post-header div.search_box label.search_box").on('click', function(){
+    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
+  });
+
+</script>
+
+<section class="post">
+
+  <div class="c">
+
+  <article class="post-content">
+  {{ content }}
+  </article>
+  </div>
+  
+</section>
+
+<section class="disqus">
+<div id="disqus_thread" class="c"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+var disqus_config = function () {
+this.page.url = '{{ page.url | prepend: site.baseurl }}';
+this.page.identifier = JSON.stringify($.QueryString); // '{{ page.id }}';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//dompub.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Favor habilitar JavaScript para visualizar <a href="https://disqus.com/?ref_noscript" rel="nofollow">comentários do Disqus.</a></noscript>
+</section>
