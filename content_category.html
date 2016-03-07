@@ -42,25 +42,6 @@ var pg = parseInt($.QueryString["pg"]);
 $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/catpag/cadp" + cat + "_p" + pg + ".json", function( data ) {
   $("header.post-header h1").text(data.nome);
   $("header.post-header p.lead").text("Página: " +  pg + " de " + data.total_paginas + " - " + "Obras: " + data.total_obras);
-/*
-  // https://dribbble.com/shots/344061-Search
-  $( "<div/>", {
-    class: "search_box",
-    html: "<input class='search_box' type='text' id='search'><label class='search_box' for='search'>Procurar</label>"
-  }).appendTo("header.post-header");
-  $("header.post-header div.search_box input.search_box").bind("enterKey",function(e){
-    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
-  });
-  $('header.post-header div.search_box input.search_box').keyup(function(e){
-    if(e.keyCode == 13)
-    {
-      $(this).trigger("enterKey");
-    }
-  });
-  $("header.post-header div.search_box label.search_box").on('click', function(){
-    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
-  });
-*/
 
   var items = {1: [], 2: [], 3: [], 4: [], 5: []};
   var cont = 0;

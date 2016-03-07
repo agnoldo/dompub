@@ -18,6 +18,25 @@ navigation: visible
 </div>
 
 <script>
+
+  // https://dribbble.com/shots/344061-Search
+  $( "<div/>", {
+    class: "search_box",
+    html: "<input class='search_box' type='text' id='search'><label class='search_box' for='search'>Procurar</label>"
+  }).appendTo("header.post-header");
+  $("header.post-header div.search_box input.search_box").bind("enterKey",function(e){
+    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
+  });
+  $('header.post-header div.search_box input.search_box').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+      $(this).trigger("enterKey");
+    }
+  });
+  $("header.post-header div.search_box label.search_box").on('click', function(){
+    window.location.href = '/content/search.html?text=' + document.getElementById("search").value;
+  });
+
 $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/midia_categorias_principais_05.json", function( data ) {
   var items = {2: [], 3: [], 5: [], 6: []};
   var item_names = {2: "Textos", 3: "Sons", 5: "Imagens", 6: "Vídeos"};
