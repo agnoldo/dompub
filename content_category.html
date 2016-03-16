@@ -52,7 +52,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
     var bloco_objeto;
     switch('' + data.co_midia) {
       case "2": // Textos
-        bloco_objeto = "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
+        bloco_objeto = "<object style='width:100%' data='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
         break;
       case "3": // Sons
         bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";

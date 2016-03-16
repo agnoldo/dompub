@@ -45,13 +45,13 @@ function preencherConformeTipoMidia(val) {
           tipo_midia = dataCat.co_midia;
           switch('' + tipo_midia) {
             case "2": // Textos
-              bloco_objeto = "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
+              bloco_objeto = "<object style='width:100%' data='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
               break;
             case "3": // Sons
               bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
               break;
             case "5": // Imagens
-              bloco_objeto = "<img style='width:100%' src='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'></img>";
+              bloco_objeto = "<img style='width:100%' src=https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".jpg'></img>";
               break;
             case "6": // Vídeos
               bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
