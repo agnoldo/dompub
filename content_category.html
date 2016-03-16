@@ -58,7 +58,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
         bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
         break;
       case "5": // Imagens
-        bloco_objeto = "<img width='100%' style='width:100%' src='http://www.dominiopublico.gov.br/pesquisa/DetalheObraDownload.do?select_action=&co_obra=" + val.co_obra + "&co_midia=5'></img>";
+        bloco_objeto = "<img width='100%' style='width:100%' src='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".jpg'></img>";
         break;
       case "6": // Vídeos
         bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
