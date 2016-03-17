@@ -2,8 +2,8 @@
 title: Domínio Público
 location: Brasil
 description: "Bem vindo ao projeto Domínio Público!"
-baseurl: "https://www.dominiopublico.xyz"
-url: "https://www.dominiopublico.xyz"
+baseurl: "http://www.dominiopublico.xyz"
+url: "http://www.dominiopublico.xyz"
 lang: pt-BR
 
 # More settings
