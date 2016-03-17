@@ -50,7 +50,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
     var autor_idioma = val.nome_autor + (val.nome_idioma ? "<br>[" + val.nome_idioma + "]" : "");
     var a_url_autor_a = ($.inArray(val.co_autor.substr(4), ["10", "32", "117"]) ?  "<a href='/content/author.html?id=" + val.co_autor.substr(4) + "'>" + autor_idioma + "</a>" : autor_idioma);
     var bloco_objeto;
-    switch('' + data.co_midia) {
+    switch('' + val.co_midia) {
       case "2": // Textos
         bloco_objeto = "<object style='width:100%' data='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
         break;

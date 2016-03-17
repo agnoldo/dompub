@@ -49,11 +49,34 @@ $.getJSON( url_json, function( data ) {
     var a_url_obra = "<a href='/content/item.html?id=" + val.co_obra + "'>";
     var a_url_autor = "<a href='/content/author.html?id=" + val.co_autor.substr(4) + "'>";
     var autor_idioma = val.nome_autor + (val.nome_idioma ? "<br>[" + val.nome_idioma + "]" : "");
+    var bloco_objeto;
+    switch('' + val.co_midia) {
+      case "2": // Textos
+        bloco_objeto = "<object style='width:100%' data='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object>";
+        break;
+      case "3": // Sons
+        bloco_objeto = "<font size='100'><i class='icon-ol-sound'></i></font>";
+        break;
+      case "5": // Imagens
+        bloco_objeto = "<img width='100%' style='width:100%' src='https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json/" + (1000 * Math.floor(val.co_obra/1000)) + "/" + val.co_obra + ".jpg'></img>";
+        break;
+      case "6": // Vídeos
+        bloco_objeto = "<font size='100'><i class='icon-ol-video'></i></font>";
+        break;
+    }
+    items[(cont % 5) + 1].push(
+//      "<div class='col-100 white-box'>" +
+      a_url_obra + bloco_objeto + "</a><br>" +
+      a_url_obra + val.titulo + "</a><br><small>" +
+      a_url_autor_a + "</small>");
+
+/*
     items[(cont % 5) + 1].push(
       "<div class='col-100 white-box'>" +
       a_url_obra + "<object style='width:100%' data='https://www.googledrive.com/host/0B-Tq6k4CD6ndeEJqTzM3bzBIV28/" + val.co_obra + ".png' type='image/png'><img style='width:100%' data-src='holder.js/150x200?text=Capa%20não%20\nencontrada'></object></a><br>" +
       a_url_obra + val.titulo + "</a><br><small>" +
-      a_url_autor + autor_idioma + "</a></small>");
+      a_url_autor + autor_idioma + "</a></small></div>");
+*/
     cont++;
   });
   $.each( items, function( key, val) {
