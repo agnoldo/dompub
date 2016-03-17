@@ -47,7 +47,7 @@ $.getJSON( "https://raw.githubusercontent.com/agnoldo/dompub_obras/gh-pages/json
   var cont = 0;
   $.each( data.record, function( key, val ) {
     var a_url_obra = "<a href='/content/item.html?id=" + val.co_obra + "'>";
-    var autor_idioma = val.nome_autor + (val.nome_idioma ? "<br>[" + val.nome_idioma + "]" : "");
+    var autor_idioma = (val.nome_autor.trim() == "Desconhecido" ? "" : val.nome_autor) + (val.nome_idioma && (val.nome_idioma != "Não Aplicável") ? "<br>[" + val.nome_idioma + "]" : "");
     var a_url_autor_a = ($.inArray(val.co_autor.substr(4), ["10", "32", "117"]) ?  "<a href='/content/author.html?id=" + val.co_autor.substr(4) + "'>" + autor_idioma + "</a>" : autor_idioma);
     var bloco_objeto;
     switch('' + val.co_midia) {
