@@ -72,7 +72,7 @@ function preencherConformeTipoMidia(val) {
     },
     error: function(error) {
       alert('Erro no acesso ao banco de dados de busca textual.');
-      console.log('Erro: ' + error);
+      console.log('Erro: ' + JSON.stringify(error));
     },
     beforeSend: function(xhr) {
       xhr.withCredentials = true;
