@@ -1,7 +1,7 @@
 # Site settings
 title: Domínio Público
-location: Brasil
-description: "Bem vindo ao projeto Domínio Público!"
+location: INOVApps
+description: "Bem vindo ao projeto Domínio Público INOVApps!"
 baseurl: "http://www.dompub.xyz"
 url: "http://www.dompub.xyz"
 lang: pt-BR
