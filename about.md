@@ -11,7 +11,7 @@ navigation: "visible"
 
 ## Sobre o projeto
 
-{{ site.title }} é um projeto premiado pela edição 2015 do [Concurso INOVApps](http://www.mc.gov.br/concurso-inovapps/) realizado pelo Ministério das Comunicações. Seu principal objetivo é levar, de forma simples e gratuita, livros em domínio público a usuários que possuam _smartphones_ e _tablets_ em plataformas como _Android_ ou _Windows Phone_.
+{{ site.title }} é um projeto premiado pela edição 2015 do [Concurso INOVApps](http://www.mc.gov.br/concurso-inovapps/) realizado pelo Ministério da Ciência, Tecnologia, Inovações e Comunicações - MCTIC. Seu principal objetivo é levar, de forma simples e gratuita, livros em domínio público a usuários que possuam _smartphones_ e _tablets_ em plataformas como _Android_ ou _Windows Phone_.
 
 O site {{ site.title }} atende inicialmente a livros e outros tipos de mídia digital em domínio público no Brasil.
 
