@@ -1,6 +1,6 @@
 # Site de apoio Projeto Domínio Público
 
-Site estaticamente gerado pelo Jekyll para apoio ao Projeto Domínio Público, agraciado na edição 2015 do [Concurso INOVApps Ministério das Comunicações](http://www.mc.gov.br/concurso-inovapps).
+Site estaticamente gerado pelo Jekyll para apoio ao Projeto Domínio Público, agraciado na edição 2015 do [Concurso INOVApps Ministério da Ciência Tecnologia Inovações e Comunicações - MCTIC](http://www.mc.gov.br/concurso-inovapps).
 
 ## A fazer (Todo)
 
